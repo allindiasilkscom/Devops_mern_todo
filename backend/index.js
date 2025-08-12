@@ -18,8 +18,8 @@ mongoose.connect(process.env.MONGO_URI, {
 const tasksRoute = require('./routes/tasks');
 app.use('/api/tasks', tasksRoute);
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
 
-module.exports = app
+module.exports = { app, server}

@@ -1,5 +1,5 @@
 const request = require('supertest');
-const app = require('../server'); // your Express app
+const {app, server } = require('../index')
 
 describe('GET api/tasks', () => {
   it('should return 200 OK', async () => {
@@ -7,3 +7,7 @@ describe('GET api/tasks', () => {
     expect(res.statusCode).toEqual(200);
   });
 });
+
+afterAll(() => {
+    server.close();
+})

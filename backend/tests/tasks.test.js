@@ -1,5 +1,6 @@
 const request = require('supertest');
-const {app, server } = require('../index')
+const mongoose = require('mongoose');
+const { app, server } = require('../index');
 
 describe('GET api/tasks', () => {
   it('should return 200 OK', async () => {
@@ -8,6 +9,7 @@ describe('GET api/tasks', () => {
   });
 });
 
-afterAll(() => {
-    server.close();
-})
+afterAll(async () => {
+  await server.close();               // ✅ Wait for server to close
+  await mongoose.connection.close();  // ✅ Close MongoDB connection
+});

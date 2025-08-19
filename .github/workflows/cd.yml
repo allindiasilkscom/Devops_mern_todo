@@ -12,15 +12,30 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
+    - name: Get EC2 Public DNS
+      id: ec2info
+      run: |
+        DNS=$(aws ec2 describe-instances \
+          --region ap-south-1 \
+          --instance-ids i-02f744f24804acf5a \
+          --query "Reservations[0].Instances[0].PublicDnsName" \
+          --output text)
+        echo "EC2 DNS: $DNS"
+        echo "EC2_HOST=$DNS" >> $GITHUB_ENV
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: ap-south-1
+
     - name: Deploy via SSH
       uses: appleboy/ssh-action@v0.1.10
       with:
-        host: ${{ secrets.EC2_HOST }}
+        host: ${{ env.EC2_HOST }}
         username: ${{ secrets.EC2_USER }}
         key: ${{ secrets.EC2_SSH_KEY }}
         script: |
           cd ~/devops-mern-app
           git pull origin main
-          echo "VITE_API_URL=http://${{ secrets.EC2_HOST }}:5000/api" > ./frontend/.env.prod
+          echo "VITE_API_URL=http://${{ env.EC2_HOST }}:5000/api" > ./frontend/.env.prod
           docker-compose down
           docker-compose up -d --build

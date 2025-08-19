@@ -35,5 +35,5 @@ jobs:
 
     - name: Build React App
       run: |
-        echo "REACT_APP_API_URL=http://${{ secrets.EC2_HOST }}:3000/api" > .env.prod
+        echo "VITE_API_URL=http://${{ secrets.EC2_HOST }}:3000/api" > .env.prod
         npm run build

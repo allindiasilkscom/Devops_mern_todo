@@ -21,5 +21,6 @@ jobs:
         script: |
           cd ~/devops-mern-app
           git pull origin main
+          echo "VITE_API_URL=http://${{ secrets.EC2_HOST }}:5000" > ./frontend/.env.prod
           docker-compose down
           docker-compose up -d --build

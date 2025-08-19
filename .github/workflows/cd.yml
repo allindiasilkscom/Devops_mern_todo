@@ -16,7 +16,7 @@ jobs:
       id: ec2info
       run: |
         DNS=$(aws ec2 describe-instances \
-          --region ap-south-1 \
+          --region us-east-1 \
           --instance-ids i-02f744f24804acf5a \
           --query "Reservations[0].Instances[0].PublicDnsName" \
           --output text)

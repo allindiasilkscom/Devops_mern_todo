@@ -8,6 +8,7 @@
     "supertest": "^7.1.4"
   },
   "scripts": {
-  "test": "jest"
-}
+  "test": "jest",
+   "prod": "node index.js"
+  }
 }

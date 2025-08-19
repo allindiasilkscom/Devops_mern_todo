@@ -34,6 +34,7 @@ jobs:
       run: npm install
 
     - name: Build React App
+      working-directory: ./frontend  
       run: |
         echo "VITE_API_URL=http://${{ secrets.EC2_HOST }}:3000/api" > .env.prod
         npm run build

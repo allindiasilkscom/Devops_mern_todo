@@ -33,6 +33,7 @@ jobs:
       working-directory: ./frontend
       run: npm install
 
-    - name: Build frontend
-      working-directory: ./frontend
-      run: npm run build
+    - name: Build React App
+      run: |
+        echo "REACT_APP_API_URL=http://${{ secrets.EC2_HOST }}:3000/api" > .env.prod
+        npm run build

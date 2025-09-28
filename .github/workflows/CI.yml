@@ -14,10 +14,10 @@ jobs:
 
     steps:
       - name: Checkout Repository
-      - uses: actions/checkout@v5
+        uses: actions/checkout@v5
 
       - name: Setup Node.js
-        uses: action@setup-node@v3
+        uses: action/setup-node@v3
         with:
           node-version: "22"
 
@@ -39,10 +39,10 @@ jobs:
 
   steps:
     - name: Checkout Repository
-    - uses: action/checkout@v3
+      uses: action/checkout@v3
 
     - name: Setup Node.js
-    - uses: action@setup-node@v3
+      uses: action/setup-node@v3
       with:
         node-version: "22"
 

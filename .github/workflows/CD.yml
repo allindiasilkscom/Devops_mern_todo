@@ -20,6 +20,6 @@ jobs:
           script_stop: true
           script: |
             cd /home/ec2-user/Devops_mern_todo
-            git pull origin main
+            sudo git pull origin main
             docker-compose down
             docker-compose up --build -d

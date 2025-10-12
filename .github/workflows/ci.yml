@@ -6,6 +6,7 @@ on:
       - main
 
 jobs:
+  # 1️⃣ Initialize MongoDB and seed test data
   mongo-init:
     runs-on: ubuntu-latest
 
@@ -16,7 +17,7 @@ jobs:
           - 27017:27017
 
     steps:
-      - name: Checkout Repository
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Setup Node.js
@@ -27,10 +28,10 @@ jobs:
       - name: Wait for MongoDB to be ready
         run: |
           until nc -z localhost 27017; do
-            echo "waiting for MongoDB..."
+            echo "Waiting for MongoDB..."
             sleep 2
           done
-            echo "MongoDB is Up"
+          echo "✅ MongoDB is up!"
 
       - name: Seed MongoDB
         working-directory: ./backend
@@ -38,28 +39,29 @@ jobs:
           npm install
           node seedTasksData.js
 
-    test:
-      runs-on: ubuntu-latest
-      needs: mongo-init
+  # 2️⃣ Run tests after seeding data
+  test:
+    runs-on: ubuntu-latest
+    needs: mongo-init
 
-      env:
-        PORT: ${{ secrets.PORT }}
-        MONGO_URI: ${{ secrets.MONGO_URI }}
-        JET_SECRET: ${{ secrets.JET_SECRET }}
+    env:
+      PORT: ${{ secrets.PORT }}
+      MONGO_URI: ${{ secrets.MONGO_URI }}
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
 
-      steps:
-        - name: Checkout Repository
-          uses: actions/checkout@v3
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-        - name: Setup Node.js
-          uses: actions/setup-node@v3
-          with:
-            node-version: "22"
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "22"
 
-        - name: Install backend dependencies
-          working-directory: ./backend
-          run: npm install
+      - name: Install backend dependencies
+        working-directory: ./backend
+        run: npm install
 
-        - name: Run backend tests
-          working-directory: ./backend
-          run: npm test
+      - name: Run backend tests
+        working-directory: ./backend
+        run: npm test

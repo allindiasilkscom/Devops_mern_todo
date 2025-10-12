@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     services:
-      mongo: # give the service a name
+      mongo:
         image: mongo
         ports:
           - 27017:27017

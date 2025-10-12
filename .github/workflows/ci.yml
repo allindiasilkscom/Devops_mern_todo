@@ -2,7 +2,8 @@ name: MERN CI
 
 on:
   push:
-    branches: [main] # correct keyword is "branches", not "branch"
+    branches:
+      - main
 
 jobs:
   mongo-init:

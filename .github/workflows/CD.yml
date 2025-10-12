@@ -16,8 +16,6 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
-          port: 22
-          script_stop: true
           script: |
             cd /home/ec2-user/Devops_mern_todo
             sudo git pull origin main
